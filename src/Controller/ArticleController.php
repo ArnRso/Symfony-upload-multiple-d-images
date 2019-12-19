@@ -102,8 +102,14 @@ class ArticleController extends AbstractController
     /**
      * Permet de supprimer une image en particulier d'un article donné
      * @Route("/{id}/img/delete/{id_image}", name="article_image_delete")
+     * @param $id
+     * @param $id_image
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param ArticleRepository $articleRepository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteImage($id, $id_image, EntityManagerInterface $entityManager, Request $request, ArticleRepository $articleRepository)
+    public function deleteImage($id, $id_image, EntityManagerInterface $entityManager, ArticleRepository $articleRepository)
     {
         $article = $articleRepository->find($id);
         $images = $article->getImages();
@@ -111,7 +117,7 @@ class ArticleController extends AbstractController
         $article->setImages($images);
         $entityManager->persist($article);
         $entityManager->flush();
-        return $this->redirectToRoute('article_edit', ['id'=>$id]);
+        return $this->redirectToRoute('article_edit', ['id' => $id]);
 
     }
 
