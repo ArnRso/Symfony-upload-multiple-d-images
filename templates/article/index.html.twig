@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <h1>Article index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Images</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.content }}</td>
+                <td>
+                    {% if article.images is defined %}
+                        <div style="display: flex;">
+                        {% for image in article.images %}
+                            <div style="width:100px; height:auto;">
+                                <img src="{{ asset('assets/uploaded_images') ~ '/'~image }}" style="width:100%; height:auto;">
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('article_new') }}">Create new</a>
+{% endblock %}

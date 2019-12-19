@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Article{% endblock %}
+
+{% block body %}
+    <h1>Edit Article</h1>
+
+    {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('article_index') }}">back to list</a>
+    {% if article.images is defined %}
+        <div style="display: flex;">
+            {% for image in article.images %}
+                <div style="width:100px; height:100px;">
+                    <img src="{{ asset('assets/uploaded_images') ~ '/'~image }}"
+                         style="width:100%; height:auto;">
+                    <a href="{{ path('article_image_delete', {'id_image': loop.index0, 'id': article.id}) }}">supprimer
+                        l'image</a>
+                </div>
+
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {{ include('article/_delete_form.html.twig') }}
+{% endblock %}
